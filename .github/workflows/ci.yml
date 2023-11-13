@@ -1,0 +1,42 @@
+name: Github Actions CI
+run-name: Unlimited server version build by ${{ github.actor }} on Github Actions 🚀
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  Explore-Github-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - 
+        run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by Github!"
+      - 
+        run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+            
