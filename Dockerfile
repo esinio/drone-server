@@ -12,8 +12,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 WORKDIR /src/drone
 
 RUN go env -w GOPROXY="https://goproxy.cn,direct" && \
-    go mod download && \
-    go build -ldflags "-extldflags \"-static\"" -tags="nolimit" cmd/drone-server
+    go mod tidy && \
+    go build -ldflags "-extldflags \"-static\"" -tags="nolimit" github.com/drone/drone/cmd/drone-server
 
 
 FROM alpine
