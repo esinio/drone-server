@@ -20,7 +20,7 @@ FROM alpine
 
 VOLUME /data
 
-RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
+RUN echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ENV GODEBUG netdns=go \
     XDG_CACHE_HOME /data \
