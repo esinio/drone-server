@@ -7,13 +7,13 @@ ENV CGO_CFLAGS="-g -O2 -Wno-return-local-addr"
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && \
     echo "Asia/Shanghai" > /etc/timezone && \
     apk add build-base git ca-certificates && \
-    git clone https://github.com/harness/gitness.git -b drone -o drone
+    git clone https://github.com/harness/gitness.git -b drone ./drone
 
 WORKDIR /src/drone
 
 RUN go env -w GOPROXY="https://goproxy.cn,direct" && \
     go mod tidy && \
-    go build -ldflags "-extldflags \"-static\"" -tags="nolimit" github.com/drone/drone/cmd/drone-server
+    go build -ldflags "-extldflags \"-static\"" -tags="nolimit" ./cmd/drone-server
 
 
 FROM alpine
